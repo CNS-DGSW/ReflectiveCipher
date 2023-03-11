@@ -1,0 +1,123 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'org.springframework.boot' version '3.0.0'
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+    id 'signing'
+    id 'jacoco'
+}
+
+bootJar.enabled = false
+
+test {
+     useJUnitPlatform()
+}
+
+
+jacoco {
+    toolVersion = '0.8.8'       // for jdk 17
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport {
+    reports {
+        html.enabled true
+        csv.enabled true
+        xml.enabled false
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                            "**/*Application*",
+                            "**/*Configuration*",
+                            "**/*Properties*",
+                            "**/*Exception*"
+                    ])
+                })
+        )
+    }
+
+    finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            enabled = true
+            element = 'CLASS'
+
+            limit {
+                counter = 'BRANCH'
+                value = 'COVEREDRATIO'
+                minimum = 0.90
+            }
+
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.80
+            }
+
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 200
+            }
+
+            excludes = [
+                    "**.*Application*",
+                    "**.*Configuration*",
+                    "**.*Properties*",
+                    "**.*Exception*"
+            ]
+        }
+    }
+}
+
+
+group 'org.swcns'
+archivesBaseName = "reflective-lib"
+version '1.0.0-SNAPSHOT'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: 'jacoco'
+
+    group 'io.github.dgsw-cns'
+    version '1.0.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.aspectj:aspectjrt:1.9.19'
+        implementation 'org.aspectj:aspectjweaver:1.9.19'
+
+        annotationProcessor 'org.springframework.boot:spring-boot-autoconfigure-processor:3.0.0'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:3.0.0'
+        implementation 'org.springframework.boot:spring-boot-autoconfigure-processor:3.0.0'
+        implementation 'org.springframework.boot:spring-boot-configuration-processor:3.0.0'
+
+        compileOnly 'org.projectlombok:lombok:1.18.26'
+        annotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+        testImplementation 'org.projectlombok:lombok:1.18.26'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+
+        testImplementation 'org.assertj:assertj-core:3.24.2'
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            showStandardStreams = true
+        }
+    }
+}

@@ -1,0 +1,6 @@
+rootProject.name = 'reflectivecipher'
+include 'reflectivecipher-lib'
+include 'reflectivecipher-spring-boot-autoconfigure'
+include 'reflectivecipher-spring-boot-starter'
+include 'reflectivecipher-example'
+

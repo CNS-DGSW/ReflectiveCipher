@@ -1,0 +1,11 @@
+reflcrypt:
+  algorithm: AES/CBC/PKCS5Padding
+  key: WOWILOVEIT
+  hash: WOW
+  iv: AAAABBBBCCCCDDDD
+
+logging:
+  file:
+    name: logs/test.log
+  pattern:
+    console:

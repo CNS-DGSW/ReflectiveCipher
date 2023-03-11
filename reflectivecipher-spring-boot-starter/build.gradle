@@ -1,0 +1,49 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'jacoco'
+    id 'signing'
+}
+
+group 'org.swcns'
+version '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api project(':reflectivecipher-lib')
+    api project(':reflectivecipher-spring-boot-autoconfigure')
+
+    implementation 'org.springframework.boot:spring-boot-starter:3.0.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier.set 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier.set 'sources'
+    from sourceSets.main.allSource
+}
+
+signing {
+    sign publishing.publications
+    //sign configurations.archives
+}
+
+javadoc {
+    options.addStringOption("locale","ko_KR")
+    options.addStringOption("encoding","UTF-8")
+    options.addStringOption("charset","UTF-8")
+    options.addStringOption("docencoding","UTF-8")
+}
