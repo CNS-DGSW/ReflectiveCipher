@@ -1,33 +1,33 @@
 {"groups": [
   {
-    "name": "reflcrypt",
+    "name": "cipher",
     "type": "org.swcns.reflectivecipher.property.EncryptProperties",
     "sourceType": "org.swcns.reflectivecipher.property.EncryptProperties"
   }
 ],"properties": [
   {
-    "name": "reflcrypt.algorithm",
+    "name": "cipher.algorithm",
     "type": "java.lang.String",
     "sourceType": "org.swcns.reflectivecipher.property.EncryptProperties"
   },
   {
-    "name": "reflcrypt.key",
+    "name": "cipher.key",
     "type": "java.lang.String",
     "sourceType": "org.swcns.reflectivecipher.property.EncryptProperties"
   },
   {
-    "name": "reflcrypt.hash",
+    "name": "cipher.hash",
     "type": "java.lang.String",
     "sourceType": "org.swcns.reflectivecipher.property.EncryptProperties"
   },
   {
-    "name": "reflcrypt.iv",
+    "name": "cipher.iv",
     "type": "java.lang.String",
     "sourceType": "org.swcns.reflectivecipher.property.EncryptProperties"
   }
 ],"hints": [
   {
-    "name": "reflcrypt.algorithm",
+    "name": "cipher.algorithm",
     "values": [
       {
         "value": "AES/CBC/PKCS5Padding",

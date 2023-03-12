@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
-@ConfigurationProperties(prefix = "reflcrypt")
+@ConfigurationProperties(prefix = "cipher")
 public class CipherProperties {
     private String algorithm;
     private String key;

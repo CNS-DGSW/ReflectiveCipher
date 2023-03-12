@@ -1,4 +1,4 @@
-reflcrypt:
+cipher:
   algorithm: AES/CBC/PKCS5Padding
   key: WOWILOVEIT
   hash: WOW
