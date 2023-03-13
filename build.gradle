@@ -8,12 +8,10 @@ plugins {
     id 'jacoco'
 }
 
-bootJar.enabled = false
 
 test {
      useJUnitPlatform()
 }
-
 
 jacoco {
     toolVersion = '0.8.8'       // for jdk 17

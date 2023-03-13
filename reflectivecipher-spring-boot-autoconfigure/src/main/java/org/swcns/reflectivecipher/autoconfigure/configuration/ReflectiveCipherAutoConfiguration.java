@@ -1,7 +1,6 @@
 package org.swcns.reflectivecipher.autoconfigure.configuration;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -22,22 +21,22 @@ public class ReflectiveCipherAutoConfiguration {
 
     @Bean @ConditionalOnMissingBean
     public ReflectionCipher cipher() {
-        return new ReflectionCipher(encryptor(), decryptor());
+        return new ReflectionCipher(objectEncryptor(), objectDecryptor());
     }
 
     @Bean @ConditionalOnMissingBean
-    public EncryptionManager manager() {
+    public EncryptionManager encryptionManager() {
         return new EncryptionManager(new EncryptProperties(properties.getAlgorithm(),
                 properties.getKey(), properties.getHash(), properties.getIv()));
     }
 
-    @Bean @ConditionalOnBean(EncryptionManager.class) @ConditionalOnMissingBean
-    public ObjectEncryptor encryptor() {
-        return new ObjectEncryptor(manager());
+    @Bean @ConditionalOnMissingBean
+    public ObjectEncryptor objectEncryptor() {
+        return new ObjectEncryptor(encryptionManager());
     }
 
-    @Bean @ConditionalOnBean(EncryptionManager.class) @ConditionalOnMissingBean
-    public ObjectDecryptor decryptor() {
-        return new ObjectDecryptor(manager());
+    @Bean @ConditionalOnMissingBean
+    public ObjectDecryptor objectDecryptor() {
+        return new ObjectDecryptor(encryptionManager());
     }
 }

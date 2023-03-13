@@ -10,12 +10,12 @@ repositories {
 }
 
 dependencies {
-    api project(':reflectivecipher-lib')
-    api project(':reflectivecipher-spring-boot-autoconfigure')
+    implementation project(':reflectivecipher-lib')
+    implementation project(':reflectivecipher-spring-boot-autoconfigure')
 
+    //noinspection VulnerableLibrariesLocal
     implementation 'org.springframework.boot:spring-boot-starter:3.0.0'
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.0.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }

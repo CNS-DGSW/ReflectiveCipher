@@ -1,2 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  org.swcns.reflectivecipher.autoconfigure.configuration.ReflectiveCipherAutoConfiguration
