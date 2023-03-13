@@ -9,11 +9,16 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    all {
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+    }
+}
+
 dependencies {
     implementation 'org.aspectj:aspectjrt:1.9.19'
     implementation 'org.aspectj:aspectjweaver:1.9.19'
     implementation 'org.slf4j:slf4j-api:2.0.0-alpha1'
-    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha1'
 
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'

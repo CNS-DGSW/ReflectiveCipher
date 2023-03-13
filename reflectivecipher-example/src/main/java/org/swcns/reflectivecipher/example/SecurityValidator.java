@@ -1,15 +1,12 @@
 package org.swcns.reflectivecipher.example;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
+import org.swcns.reflectivecipher.example.component.A;
 import org.swcns.reflectivecipher.util.ObjectDecryptor;
 import org.swcns.reflectivecipher.util.ObjectEncryptor;
 
-@Component
 @RequiredArgsConstructor
-public class ReflectiveCipherComponent implements ApplicationRunner {
+public class SecurityValidator {
 
     private final ObjectEncryptor encryptor;
 
@@ -24,10 +21,5 @@ public class ReflectiveCipherComponent implements ApplicationRunner {
 
         A c = decryptor.getDecryptedObject(b);
         System.out.printf("after decrypt: %s%n", c);
-    }
-
-    @Override
-    public void run(ApplicationArguments args) {
-        check();
     }
 }

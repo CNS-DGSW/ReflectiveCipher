@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+	<Properties>
+		<Property name="logName">ReflectiveCipher</Property>
+		<Property name="layoutPattern">[%d] %-5level [%thread] %C{100} %M - %msg%n</Property>
+	</Properties>
+
+    <!-- 콘솔, 파일에 찍을 때 형식 및 설정 셋팅-->
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+	  		<PatternLayout pattern="[%d{HH:mm:ss.SSS}] %-5level [%thread] %C{100} %M - %msg%n" />
+	 	</Console>
+		<RollingFile name="file" fileName="${ReflectiveCipher.root}/WEB-INF/logs/${logName}.log" filePattern="${ReflectiveCipher.root}/WEB-INF/logs/${logName}_%d{yyyy-MM-dd}.log">
+			<PatternLayout pattern="${layoutPattern}" />
+ 			<Policies>
+  				<SizeBasedTriggeringPolicy size="10MB" /> <!-- 10MB 용량이 초과시 DefaultRolloverStrategy 정책만큼 넘버링 -->
+				<TimeBasedTriggeringPolicy interval="1" /><!-- 일별 로그 파일 생성-->
+			</Policies>
+			<DefaultRolloverStrategy max="30" fileIndex="min" /><!-- 롤링 파일 500개 까지 생성 -->
+ 		</RollingFile>
+	</Appenders>
+
+	<Loggers>
+		 <!-- =================================================================== -->
+		<!-- ReflectiveCipher specific Logger setting								 -->
+		<!-- =================================================================== -->
+	    <logger name="org.swcns.reflective-cipher" level="debug" additivity="false">
+	    	<AppenderRef ref="console" /> <!-- 콘솔에 로그 찍겠단 뜻 -->
+	      	<AppenderRef ref="file" />	  <!-- 파일에 로그 찍겠단 뜻 -->
+	    </logger>
+
+		<!-- =================================================================== -->
+		<!-- Root(Default) Setting												 -->
+		<!-- =================================================================== -->
+		<!-- off, fatal, error, warn, info, debug, trace, all -->
+		<Root level="debug" additivity="false">
+			<AppenderRef ref="file"/>
+			<AppenderRef ref="console" />
+	 	</Root>
+ 	</Loggers>
+</Configuration>

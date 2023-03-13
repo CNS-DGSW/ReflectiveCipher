@@ -1,4 +1,4 @@
-package org.swcns.reflectivecipher.example;
+package org.swcns.reflectivecipher.example.component;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
