@@ -12,24 +12,23 @@ import java.util.stream.Collectors;
 public class ObjectEncryptor {
     private final EncryptionManager manager;
 
+    @SuppressWarnings("unchecked")
     private <T> T encryptInstance(Object obj) throws Exception {
-        return manager.encrypt((T)obj);
+        return manager.encrypt((T) obj);
     }
 
-    private <T> T encryptFields(Object obj) throws Exception {
-        T instance = (T)obj.getClass().newInstance();
+    protected <T> T encryptFields(T obj) throws Exception {
+        //noinspection unchecked,deprecation
+        T instance = (T) obj.getClass().newInstance();
 
-        Field[] fields = obj.getClass().getDeclaredFields();
+        Field[] fields = instance.getClass().getDeclaredFields();
         for(Field field : fields) {
             field.setAccessible(true);
             if (field.getAnnotation(SecurityField.class) != null) {
                 if(ReflectionUtil.isCollectionType(field.get(obj))) {
-                    Collection<?> collection = (Collection<?>) field.get(obj);
-                    field.set(instance, (T) collection.stream()
-                            .map(it -> getEncryptedObject(it))
-                            .collect(Collectors.toList()));
-                }else{
-                    Object encrypted = manager.encrypt(field.get(obj));
+                    field.set(instance, castCollection((Collection<?>) field.get(obj)));
+                } else {
+                    T encrypted = encryptInstance(field.get(obj));
                     field.set(instance, encrypted);
                 }
             } else {
@@ -40,16 +39,14 @@ public class ObjectEncryptor {
     }
 
     public <T> T getEncryptedObject(T obj) {
-        if(obj == null) return obj;
+        if(obj == null) return null;
 
         try {
             if (ReflectionUtil.isAbleToEncryptInstance(obj)) {
                 return encryptInstance(obj);
             } else if(ReflectionUtil.isCollectionType(obj)) {
                 Collection<?> result = (Collection<?>) obj;
-                return (T) result.stream()
-                        .map(it -> getEncryptedObject(it))
-                        .collect(Collectors.toList());
+                return castCollection(result);
             } else {
                 return encryptFields(obj);
             }
@@ -57,5 +54,12 @@ public class ObjectEncryptor {
             ex.printStackTrace();
             throw new UnsupportedOperationException("Unable to encrypt: " + obj.getClass().getName());
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    protected <T> T castCollection(Collection<?> collection) {
+        return (T) collection.stream()
+                .map(this::getEncryptedObject)
+                .collect(Collectors.toList());
     }
 }

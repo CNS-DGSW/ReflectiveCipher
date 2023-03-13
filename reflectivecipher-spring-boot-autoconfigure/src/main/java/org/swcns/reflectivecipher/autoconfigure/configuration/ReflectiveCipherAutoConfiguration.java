@@ -31,12 +31,12 @@ public class ReflectiveCipherAutoConfiguration {
                 properties.getKey(), properties.getHash(), properties.getIv()));
     }
 
-    @Bean @ConditionalOnBean(EncryptionManager.class)
+    @Bean @ConditionalOnBean(EncryptionManager.class) @ConditionalOnMissingBean
     public ObjectEncryptor encryptor() {
         return new ObjectEncryptor(manager());
     }
 
-    @Bean @ConditionalOnBean(EncryptionManager.class)
+    @Bean @ConditionalOnBean(EncryptionManager.class) @ConditionalOnMissingBean
     public ObjectDecryptor decryptor() {
         return new ObjectDecryptor(manager());
     }

@@ -31,7 +31,7 @@
     "values": [
       {
         "value": "AES/CBC/PKCS5Padding",
-        "description": "AES 암/복호화를 CBC 블록으로 진행합니다"
+        "description": "AES 암/복호화를 CBC 블록으로 진행합니다."
       }
     ]
   }

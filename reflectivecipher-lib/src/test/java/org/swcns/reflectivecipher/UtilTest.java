@@ -13,20 +13,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UtilTest {
 
-    private EncryptProperties properties;
-
-    private EncryptionManager manager;
-
     private ObjectEncryptor encryptor;
 
     private ObjectDecryptor decryptor;
 
     @BeforeAll
     void init() {
-        properties = new EncryptProperties(
+        EncryptProperties properties = new EncryptProperties(
                 "AES/CBC/PKCS5Padding", "WOWILOVEIT", "WOW", "AAAABBBBCCCCDDDD"
         );
-        manager = new EncryptionManager(properties);
+        EncryptionManager manager = new EncryptionManager(properties);
         encryptor = new ObjectEncryptor(manager);
         decryptor = new ObjectDecryptor(manager);
     }
